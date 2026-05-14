@@ -867,7 +867,10 @@ Clientes · dispensario · venta · marihuana recreativa" oninput="saveNotesDebo
       <div class="view-section" id="view-radar">
         <h2 class="view-title">📡 Radar de Competencia</h2>
         <div class="view-sub">Monitorea lo que publica tu competencia · Reels · Historias · Notas de observación</div>
-        <div class="radar-grid">
+        <div style="margin-bottom:16px">
+          <button class="btn btn-primary" onclick="openAddCompetitorModal()">+ Agregar organización</button>
+        </div>
+        <div class="radar-grid" id="radarGrid">
 
           <!-- Dispensario Nacional -->
           <div class="radar-card">
@@ -918,11 +921,10 @@ Clientes · dispensario · venta · marihuana recreativa" oninput="saveNotesDebo
           <div class="radar-card">
             <div class="radar-card-header">
               <div class="radar-avatar">⛰️</div>
-              <div><div class="radar-name">Dispensario Andino</div><div class="radar-handle">@dispensarioandino</div></div>
+              <div><div class="radar-name">Dispensario Andino</div><div class="radar-handle">Sin IG confirmado</div></div>
             </div>
             <div class="radar-btns">
-              <a class="radar-btn ig" href="https://www.instagram.com/dispensarioandino/" target="_blank">📸 IG</a>
-              <a class="radar-btn" href="https://www.instagram.com/dispensarioandino/reels/" target="_blank">🎬 Reels</a>
+              <a class="radar-btn" href="https://www.instagram.com/explore/search/keyword/?q=dispensarioandino" target="_blank">🔍 Buscar en IG</a>
             </div>
             <div class="radar-notes-label">OBSERVACIONES</div>
             <textarea class="radar-notes" id="notes-dispensarioandino" placeholder="Anotá qué publicaron, formato, frecuencia..."></textarea>
@@ -947,11 +949,10 @@ Clientes · dispensario · venta · marihuana recreativa" oninput="saveNotesDebo
           <div class="radar-card">
             <div class="radar-card-header">
               <div class="radar-avatar">📋</div>
-              <div><div class="radar-name">Receta Cannabis Chile</div><div class="radar-handle">@recetacannabischile</div></div>
+              <div><div class="radar-name">Receta Cannabis Chile</div><div class="radar-handle">Sin IG confirmado</div></div>
             </div>
             <div class="radar-btns">
-              <a class="radar-btn ig" href="https://www.instagram.com/recetacannabischile/" target="_blank">📸 IG</a>
-              <a class="radar-btn" href="https://www.instagram.com/recetacannabischile/reels/" target="_blank">🎬 Reels</a>
+              <a class="radar-btn" href="https://www.instagram.com/explore/search/keyword/?q=recetacannabischile" target="_blank">🔍 Buscar en IG</a>
             </div>
             <div class="radar-notes-label">OBSERVACIONES</div>
             <textarea class="radar-notes" id="notes-recetacannabis" placeholder="Anotá qué publicaron, formato, frecuencia..."></textarea>
@@ -977,11 +978,10 @@ Clientes · dispensario · venta · marihuana recreativa" oninput="saveNotesDebo
           <div class="radar-card">
             <div class="radar-card-header">
               <div class="radar-avatar">🧪</div>
-              <div><div class="radar-name">Fc Farmacannabis</div><div class="radar-handle">@farmacannabis.cl</div></div>
+              <div><div class="radar-name">Fc Farmacannabis</div><div class="radar-handle">Sin IG confirmado</div></div>
             </div>
             <div class="radar-btns">
-              <a class="radar-btn ig" href="https://www.instagram.com/farmacannabis.cl/" target="_blank">📸 IG</a>
-              <a class="radar-btn" href="https://www.instagram.com/farmacannabis.cl/reels/" target="_blank">🎬 Reels</a>
+              <a class="radar-btn" href="https://www.instagram.com/explore/search/keyword/?q=farmacannabis" target="_blank">🔍 Buscar en IG</a>
             </div>
             <div class="radar-notes-label">OBSERVACIONES</div>
             <textarea class="radar-notes" id="notes-farmacannabis" placeholder="Anotá qué publicaron, formato, frecuencia..."></textarea>
@@ -1007,17 +1007,33 @@ Clientes · dispensario · venta · marihuana recreativa" oninput="saveNotesDebo
           <div class="radar-card">
             <div class="radar-card-header">
               <div class="radar-avatar">🌸</div>
-              <div><div class="radar-name">Mariamed</div><div class="radar-handle">@mariamed.cl</div></div>
+              <div><div class="radar-name">Mariamed</div><div class="radar-handle">Sin IG confirmado</div></div>
             </div>
             <div class="radar-btns">
-              <a class="radar-btn ig" href="https://www.instagram.com/mariamed.cl/" target="_blank">📸 IG</a>
-              <a class="radar-btn" href="https://www.instagram.com/mariamed.cl/reels/" target="_blank">🎬 Reels</a>
+              <a class="radar-btn" href="https://www.instagram.com/explore/search/keyword/?q=mariamed" target="_blank">🔍 Buscar en IG</a>
             </div>
             <div class="radar-notes-label">OBSERVACIONES</div>
             <textarea class="radar-notes" id="notes-mariamed" placeholder="Anotá qué publicaron, formato, frecuencia..."></textarea>
             <button class="radar-save" onclick="saveRadarNote('mariamed')">Guardar nota</button>
           </div>
 
+          <!-- Organizaciones agregadas dinámicamente -->
+          <div id="customCompetitors"></div>
+
+        </div>
+      </div>
+
+      <!-- MODAL AGREGAR ORGANIZACIÓN -->
+      <div class="modal-overlay" id="addCompetitorModal" onclick="if(event.target===this)closeModal('addCompetitorModal')">
+        <div class="modal-box">
+          <div class="modal-title">+ Agregar Organización</div>
+          <div class="fg"><label>Nombre</label><input type="text" id="comp-name" placeholder="Ej: Asociación Verde"></div>
+          <div class="fg"><label>Usuario de Instagram (sin @)</label><input type="text" id="comp-ig" placeholder="Ej: miorganizacion.cl"></div>
+          <div class="fg"><label>Sitio web (opcional)</label><input type="text" id="comp-web" placeholder="Ej: https://miorganizacion.cl"></div>
+          <div class="btn-row">
+            <button class="btn btn-primary" onclick="addCompetitor()">Agregar</button>
+            <button class="btn btn-secondary" onclick="closeModal('addCompetitorModal')">Cancelar</button>
+          </div>
         </div>
       </div>
 
@@ -2239,6 +2255,52 @@ document.getElementById('chatInput').addEventListener('keydown',e=>{if(e.key==='
   checkOnboard();
   setTimeout(()=>toast('🌿 Mawida AI v4.0 activo'),800);
 
+function openAddCompetitorModal(){document.getElementById('addCompetitorModal').classList.add('active');document.getElementById('comp-name').value='';document.getElementById('comp-ig').value='';document.getElementById('comp-web').value=''}
+
+function addCompetitor(){
+  const name=document.getElementById('comp-name').value.trim();
+  const ig=document.getElementById('comp-ig').value.trim().replace('@','');
+  const web=document.getElementById('comp-web').value.trim();
+  if(!name){toast('⚠️ Ingresá un nombre');return}
+  const competitors=JSON.parse(ls_get('mawida_radar_custom')||'[]');
+  const id='custom_'+Date.now();
+  competitors.push({id,name,ig,web});
+  ls_set('mawida_radar_custom',JSON.stringify(competitors));
+  closeModal('addCompetitorModal');
+  renderCustomCompetitors();
+  toast('✓ Organización agregada');
+}
+
+function renderCustomCompetitors(){
+  const competitors=JSON.parse(ls_get('mawida_radar_custom')||'[]');
+  const notes=JSON.parse(ls_get('mawida_radar_notes')||'{}');
+  const container=document.getElementById('customCompetitors');
+  if(!container)return;
+  container.innerHTML=competitors.map(c=>`
+    <div class="radar-card">
+      <div class="radar-card-header">
+        <div class="radar-avatar">🏢</div>
+        <div><div class="radar-name">${c.name}</div><div class="radar-handle">${c.ig?'@'+c.ig:'Sin IG'}</div></div>
+      </div>
+      <div class="radar-btns">
+        ${c.ig?`<a class="radar-btn ig" href="https://www.instagram.com/${c.ig}/" target="_blank">📸 IG</a><a class="radar-btn" href="https://www.instagram.com/${c.ig}/reels/" target="_blank">🎬 Reels</a>`:''}
+        ${c.web?`<a class="radar-btn" href="${c.web}" target="_blank">🌐 Web</a>`:''}
+        <button class="radar-btn" style="color:var(--rust);border-color:var(--rust)" onclick="deleteCompetitor('${c.id}')">✕ Eliminar</button>
+      </div>
+      <div class="radar-notes-label">OBSERVACIONES</div>
+      <textarea class="radar-notes" id="notes-${c.id}" placeholder="Anotá qué publicaron, formato, frecuencia...">${notes[c.id]?.text||''}</textarea>
+      <button class="radar-save" onclick="saveRadarNote('${c.id}')">Guardar nota</button>
+    </div>`).join('');
+}
+
+function deleteCompetitor(id){
+  if(!confirm('¿Eliminar esta organización?'))return;
+  const competitors=JSON.parse(ls_get('mawida_radar_custom')||'[]').filter(c=>c.id!==id);
+  ls_set('mawida_radar_custom',JSON.stringify(competitors));
+  renderCustomCompetitors();
+  toast('✓ Organización eliminada');
+}
+
 function saveRadarNote(id){
   const val=document.getElementById('notes-'+id)?.value||'';
   const notes=JSON.parse(ls_get('mawida_radar_notes')||'{}');
@@ -2248,6 +2310,7 @@ function saveRadarNote(id){
 }
 
 function loadRadarNotes(){
+  renderCustomCompetitors();
   const notes=JSON.parse(ls_get('mawida_radar_notes')||'{}');
   for(const[id,data] of Object.entries(notes)){
     const el=document.getElementById('notes-'+id);
