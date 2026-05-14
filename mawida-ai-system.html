@@ -300,6 +300,17 @@ body::before{content:'';position:fixed;inset:0;background-image:url('bg-flor.avi
 .fg input:focus,.fg select:focus,.fg textarea:focus{outline:none;border-color:var(--moss);background:white;box-shadow:0 0 0 3px rgba(27,58,47,.08)}
 .fg textarea{resize:vertical;min-height:80px}
 
+/* BOTÓN FLOTANTE AGENTES */
+.fab-wrap{position:fixed;bottom:28px;right:28px;z-index:9999;display:flex;flex-direction:column;align-items:flex-end;gap:10px}
+.fab-menu{display:flex;flex-direction:column;gap:8px;align-items:flex-end;opacity:0;pointer-events:none;transform:translateY(10px);transition:all .25s cubic-bezier(.25,.46,.45,.94)}
+.fab-menu.open{opacity:1;pointer-events:all;transform:translateY(0)}
+.fab-agent-btn{display:flex;align-items:center;gap:10px;background:var(--cream);border:1px solid rgba(27,58,47,.15);border-radius:100px;padding:8px 16px 8px 10px;cursor:pointer;box-shadow:0 4px 16px rgba(18,40,33,.15);transition:all .2s;white-space:nowrap;font-family:'IBM Plex Sans',sans-serif;font-size:13px;color:var(--moss-d);font-weight:500}
+.fab-agent-btn:hover{background:var(--moss);color:var(--cream);transform:translateX(-4px)}
+.fab-agent-emoji{width:30px;height:30px;border-radius:50%;background:var(--moss);color:var(--cream);display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0}
+.fab-agent-btn:hover .fab-agent-emoji{background:rgba(255,255,255,.2)}
+.fab-btn{width:56px;height:56px;border-radius:50%;background:var(--moss);color:var(--cream);border:none;cursor:pointer;font-size:24px;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 24px rgba(18,40,33,.3);transition:all .3s;flex-shrink:0}
+.fab-btn:hover{background:var(--moss-l);transform:scale(1.08)}
+.fab-btn.open{transform:rotate(45deg);background:var(--rust)}
 /* RADAR DE COMPETENCIA */
 .radar-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin-top:16px}
 .radar-card{background:var(--cream);border:1px solid rgba(27,58,47,.1);border-radius:var(--r12);padding:18px;transition:all .3s}
@@ -1038,6 +1049,12 @@ Clientes · dispensario · venta · marihuana recreativa" oninput="saveNotesDebo
       </div>
 
     </main>
+  </div>
+
+  <!-- BOTÓN FLOTANTE AGENTES -->
+  <div class="fab-wrap">
+    <div class="fab-menu" id="fabMenu"></div>
+    <button class="fab-btn" id="fabBtn" onclick="toggleFab()" title="Tu Equipo">🤝</button>
   </div>
 
   <div class="ornament">⊹ · ⊹</div>
@@ -2294,6 +2311,32 @@ document.getElementById('chatInput').addEventListener('keydown',e=>{if(e.key==='
   await updateBadges();
   checkOnboard();
   setTimeout(()=>toast('🌿 Mawida AI v4.0 activo'),800);
+
+function toggleFab(){
+  const menu=document.getElementById('fabMenu');
+  const btn=document.getElementById('fabBtn');
+  const isOpen=menu.classList.contains('open');
+  if(isOpen){menu.classList.remove('open');btn.classList.remove('open')}
+  else{renderFabMenu();menu.classList.add('open');btn.classList.add('open')}
+}
+
+function renderFabMenu(){
+  const agents=getAgents();
+  const menu=document.getElementById('fabMenu');
+  menu.innerHTML=Object.values(agents).map(a=>`
+    <div class="fab-agent-btn" onclick="selectAgent('${a.id}');openView('chat');toggleFab()">
+      <div class="fab-agent-emoji">${a.emoji}</div>
+      <span>${a.name}</span>
+    </div>`).join('');
+}
+
+document.addEventListener('click',e=>{
+  const wrap=document.querySelector('.fab-wrap');
+  if(wrap&&!wrap.contains(e.target)){
+    document.getElementById('fabMenu')?.classList.remove('open');
+    document.getElementById('fabBtn')?.classList.remove('open');
+  }
+});
 
 function openAddCompetitorModal(){document.getElementById('addCompetitorModal').classList.add('active');document.getElementById('comp-name').value='';document.getElementById('comp-ig').value='';document.getElementById('comp-web').value=''}
 
