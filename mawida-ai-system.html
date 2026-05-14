@@ -420,6 +420,10 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
         <div class="an">Bio Bio</div><div class="ad">Región del Biobío · Sur de Chile</div>
         <span class="ab" id="lib-badge-biobio">Biblioteca: 0</span>
       </button>
+      <button class="asoc-tab" data-asoc="clinicamf" onclick="selectAsoc('clinicamf')">
+        <div class="an">Clínica MF</div><div class="ad">Clínica · Cannabis Medicinal</div>
+        <span class="ab" id="lib-badge-clinicamf">Biblioteca: 0</span>
+      </button>
     </div>
   </section>
 
@@ -1005,7 +1009,8 @@ const DEFAULT_AGENTS = {
 const ASOCIACIONES = {
   mawida:{nombre:'Mawida',desc:'Asociación principal con sede en Santiago RM. Identidad editorial, profesional y medicinal. Fuerte vínculo con equipo médico.',tono:'editorial, premium, autoridad medicinal, profesional pero cercano'},
   quinta:{nombre:'Los de la Quinta',desc:'Asociación de la V Región de Valparaíso. Identidad costera, porteña, bohemia. Cerros de Valparaíso, identidad patrimonial, cultura marítima y artística.',tono:'cercano, porteño, bohemio, cultural, identidad regional valparaísina'},
-  biobio:{nombre:'Bio Bio',desc:'Asociación del sur de Chile, Región del Biobío. Identidad profundamente territorial, natural, forestal, sureña.',tono:'orgánico, territorial, sureño, natural, contemplativo, arraigado'}
+  biobio:{nombre:'Bio Bio',desc:'Asociación del sur de Chile, Región del Biobío. Identidad profundamente territorial, natural, forestal, sureña.',tono:'orgánico, territorial, sureño, natural, contemplativo, arraigado'},
+  clinicamf:{nombre:'Clínica MF',desc:'Clínica especializada en cannabis medicinal. Identidad institucional, médica y profesional. Enfoque clínico, terapéutico y centrado en el paciente.',tono:'clínico, profesional, empático, institucional, centrado en salud y bienestar'}
 };
 
 const QUICK_PROMPTS = {
