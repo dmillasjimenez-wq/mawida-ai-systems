@@ -764,7 +764,7 @@ Clientes · dispensario · venta · marihuana recreativa" oninput="saveNotesDebo
             <div class="upload-zone" id="manualZone" onclick="document.getElementById('manualFile').click()">
               <div class="upload-icon">📄</div>
               <div class="upload-text">Subí tus manuales de marca</div>
-              <div class="upload-hint">PDF · Arrastrá o clic · Máx 10MB · Varios a la vez</div>
+              <div class="upload-hint">PDF · Arrastrá o clic · Máx 250MB · Varios a la vez</div>
               <input type="file" id="manualFile" accept=".pdf" multiple onchange="handleManualUpload(event)">
             </div>
             <div class="manual-list" id="manualList"></div>
@@ -1701,7 +1701,7 @@ function loadNotes(){document.getElementById('brandNotes').value=ls_get(`notes:$
 async function handleManualUpload(event){
   const files=Array.from(event.target.files);
   for(const file of files){
-    if(file.size>10*1024*1024){toast(`⚠️ ${file.name}: máx 10MB`);continue}
+    if(file.size>250*1024*1024){toast(`⚠️ ${file.name}: máx 250MB`);continue}
     toast(`⏳ Procesando ${file.name}…`);
     try{
       const ab=await file.arrayBuffer();
@@ -1734,7 +1734,7 @@ async function deleteManual(id){await dbDelete(id);await renderManualList();awai
 async function handleImageUpload(event){
   const files=Array.from(event.target.files);
   for(const file of files){
-    if(file.size>5*1024*1024){toast(`⚠️ ${file.name}: máx 5MB`);continue}
+    if(file.size>100*1024*1024){toast(`⚠️ ${file.name}: máx 100MB`);continue}
     try{
       const comp=await compressImg(file,1200,.85);
       const id=`image:${currentAsoc}:${Date.now()}_${Math.random().toString(36).slice(2,8)}`;
