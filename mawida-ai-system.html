@@ -300,6 +300,23 @@ body::before{content:'';position:fixed;inset:0;background-image:url('bg-flor.avi
 .fg input:focus,.fg select:focus,.fg textarea:focus{outline:none;border-color:var(--moss);background:white;box-shadow:0 0 0 3px rgba(27,58,47,.08)}
 .fg textarea{resize:vertical;min-height:80px}
 
+/* RADAR DE COMPETENCIA */
+.radar-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin-top:16px}
+.radar-card{background:var(--cream);border:1px solid rgba(27,58,47,.1);border-radius:var(--r12);padding:18px;transition:all .3s}
+.radar-card:hover{box-shadow:var(--shd);transform:translateY(-2px)}
+.radar-card-header{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+.radar-avatar{width:42px;height:42px;border-radius:50%;background:var(--moss);color:var(--cream);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.radar-name{font-weight:600;font-size:14px;color:var(--moss-d)}
+.radar-handle{font-size:11px;color:var(--brass-d);font-family:'IBM Plex Mono',monospace}
+.radar-btns{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+.radar-btn{padding:5px 10px;border-radius:100px;font-size:11px;border:1px solid rgba(27,58,47,.2);background:var(--parch);color:var(--moss-d);cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:4px;font-family:'IBM Plex Sans',sans-serif;transition:all .2s}
+.radar-btn:hover{background:var(--moss);color:var(--cream);border-color:var(--moss)}
+.radar-btn.ig{background:#e1306c;color:#fff;border-color:#e1306c}
+.radar-btn.ig:hover{background:#c1275a;border-color:#c1275a}
+.radar-notes{width:100%;border:1px solid rgba(27,58,47,.15);border-radius:8px;padding:8px 10px;font-size:12px;font-family:'IBM Plex Sans',sans-serif;color:var(--ink);background:var(--parch);resize:vertical;min-height:60px;margin-top:4px}
+.radar-notes:focus{outline:none;border-color:var(--moss)}
+.radar-notes-label{font-size:11px;color:var(--brass-d);margin-bottom:4px;font-family:'IBM Plex Mono',monospace;letter-spacing:.05em}
+.radar-save{font-size:11px;padding:4px 10px;border-radius:100px;background:var(--moss);color:var(--cream);border:none;cursor:pointer;margin-top:6px}
 /* EDITOR DE AGENTES */
 .agent-editor-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-bottom:20px}
 .agent-edit-card{background:var(--parch);border:1px solid rgba(27,58,47,.1);border-radius:10px;padding:14px;display:flex;align-items:center;gap:10px}
@@ -450,6 +467,7 @@ body::before{content:'';position:fixed;inset:0;background-image:url('bg-flor.avi
       <div class="sb-section">
         <div class="sb-title">Herramientas</div>
         <div class="nav-item" data-view="library" onclick="openView('library')"><span class="nav-icon">📚</span>Biblioteca de Marca</div>
+        <div class="nav-item" data-view="radar" onclick="openView('radar')"><span class="nav-icon">📡</span>Radar Competencia</div>
         <div class="nav-item" data-view="projects" onclick="openView('projects')"><span class="nav-icon">📁</span>Proyectos</div>
         <div class="nav-item" data-view="history" onclick="openView('history')"><span class="nav-icon">🗂</span>Historial</div>
       </div>
@@ -843,6 +861,164 @@ Clientes · dispensario · venta · marihuana recreativa" oninput="saveNotesDebo
           <button class="btn btn-secondary" onclick="resetAgents()">↺ Restaurar agentes por defecto</button>
         </div>
         <div class="agent-editor-grid" id="agentEditorGrid"></div>
+      </div>
+
+      <!-- RADAR DE COMPETENCIA -->
+      <div class="view-section" id="view-radar">
+        <h2 class="view-title">📡 Radar de Competencia</h2>
+        <div class="view-sub">Monitorea lo que publica tu competencia · Reels · Historias · Notas de observación</div>
+        <div class="radar-grid">
+
+          <!-- Dispensario Nacional -->
+          <div class="radar-card">
+            <div class="radar-card-header">
+              <div class="radar-avatar">💊</div>
+              <div><div class="radar-name">Dispensario Nacional</div><div class="radar-handle">@dispensarionacional.cl</div></div>
+            </div>
+            <div class="radar-btns">
+              <a class="radar-btn ig" href="https://www.instagram.com/dispensarionacional.cl/" target="_blank">📸 IG</a>
+              <a class="radar-btn" href="https://www.instagram.com/dispensarionacional.cl/reels/" target="_blank">🎬 Reels</a>
+            </div>
+            <div class="radar-notes-label">OBSERVACIONES</div>
+            <textarea class="radar-notes" id="notes-dispensarionacional" placeholder="Anotá qué publicaron, formato, frecuencia..."></textarea>
+            <button class="radar-save" onclick="saveRadarNote('dispensarionacional')">Guardar nota</button>
+          </div>
+
+          <!-- Fundación Daya -->
+          <div class="radar-card">
+            <div class="radar-card-header">
+              <div class="radar-avatar">🌿</div>
+              <div><div class="radar-name">Fundación Daya</div><div class="radar-handle">@fundaciondaya</div></div>
+            </div>
+            <div class="radar-btns">
+              <a class="radar-btn ig" href="https://www.instagram.com/fundaciondaya/" target="_blank">📸 IG</a>
+              <a class="radar-btn" href="https://www.instagram.com/fundaciondaya/reels/" target="_blank">🎬 Reels</a>
+            </div>
+            <div class="radar-notes-label">OBSERVACIONES</div>
+            <textarea class="radar-notes" id="notes-fundaciondaya" placeholder="Anotá qué publicaron, formato, frecuencia..."></textarea>
+            <button class="radar-save" onclick="saveRadarNote('fundaciondaya')">Guardar nota</button>
+          </div>
+
+          <!-- Almannabis -->
+          <div class="radar-card">
+            <div class="radar-card-header">
+              <div class="radar-avatar">🌱</div>
+              <div><div class="radar-name">Corporación Almannabis</div><div class="radar-handle">@almacann.chile</div></div>
+            </div>
+            <div class="radar-btns">
+              <a class="radar-btn ig" href="https://www.instagram.com/almacann.chile/" target="_blank">📸 IG</a>
+              <a class="radar-btn" href="https://www.instagram.com/almacann.chile/reels/" target="_blank">🎬 Reels</a>
+            </div>
+            <div class="radar-notes-label">OBSERVACIONES</div>
+            <textarea class="radar-notes" id="notes-almacann" placeholder="Anotá qué publicaron, formato, frecuencia..."></textarea>
+            <button class="radar-save" onclick="saveRadarNote('almacann')">Guardar nota</button>
+          </div>
+
+          <!-- Dispensario Andino -->
+          <div class="radar-card">
+            <div class="radar-card-header">
+              <div class="radar-avatar">⛰️</div>
+              <div><div class="radar-name">Dispensario Andino</div><div class="radar-handle">@dispensarioandino</div></div>
+            </div>
+            <div class="radar-btns">
+              <a class="radar-btn ig" href="https://www.instagram.com/dispensarioandino/" target="_blank">📸 IG</a>
+              <a class="radar-btn" href="https://www.instagram.com/dispensarioandino/reels/" target="_blank">🎬 Reels</a>
+            </div>
+            <div class="radar-notes-label">OBSERVACIONES</div>
+            <textarea class="radar-notes" id="notes-dispensarioandino" placeholder="Anotá qué publicaron, formato, frecuencia..."></textarea>
+            <button class="radar-save" onclick="saveRadarNote('dispensarioandino')">Guardar nota</button>
+          </div>
+
+          <!-- Dispensario Concepción -->
+          <div class="radar-card">
+            <div class="radar-card-header">
+              <div class="radar-avatar">🏙️</div>
+              <div><div class="radar-name">Dispensario Concepción</div><div class="radar-handle">Sin IG oficial</div></div>
+            </div>
+            <div class="radar-btns">
+              <a class="radar-btn" href="https://www.instagram.com/explore/search/keyword/?q=dispensarioconcepcion" target="_blank">🔍 Buscar en IG</a>
+            </div>
+            <div class="radar-notes-label">OBSERVACIONES</div>
+            <textarea class="radar-notes" id="notes-dispensarioconcepcion" placeholder="Anotá qué publicaron, formato, frecuencia..."></textarea>
+            <button class="radar-save" onclick="saveRadarNote('dispensarioconcepcion')">Guardar nota</button>
+          </div>
+
+          <!-- Receta Cannabis Chile -->
+          <div class="radar-card">
+            <div class="radar-card-header">
+              <div class="radar-avatar">📋</div>
+              <div><div class="radar-name">Receta Cannabis Chile</div><div class="radar-handle">@recetacannabischile</div></div>
+            </div>
+            <div class="radar-btns">
+              <a class="radar-btn ig" href="https://www.instagram.com/recetacannabischile/" target="_blank">📸 IG</a>
+              <a class="radar-btn" href="https://www.instagram.com/recetacannabischile/reels/" target="_blank">🎬 Reels</a>
+            </div>
+            <div class="radar-notes-label">OBSERVACIONES</div>
+            <textarea class="radar-notes" id="notes-recetacannabis" placeholder="Anotá qué publicaron, formato, frecuencia..."></textarea>
+            <button class="radar-save" onclick="saveRadarNote('recetacannabis')">Guardar nota</button>
+          </div>
+
+          <!-- Cannavida -->
+          <div class="radar-card">
+            <div class="radar-card-header">
+              <div class="radar-avatar">⚕️</div>
+              <div><div class="radar-name">Centro Médico Cannavida</div><div class="radar-handle">@cannavida.cl</div></div>
+            </div>
+            <div class="radar-btns">
+              <a class="radar-btn ig" href="https://www.instagram.com/cannavida.cl/" target="_blank">📸 IG</a>
+              <a class="radar-btn" href="https://www.instagram.com/cannavida.cl/reels/" target="_blank">🎬 Reels</a>
+            </div>
+            <div class="radar-notes-label">OBSERVACIONES</div>
+            <textarea class="radar-notes" id="notes-cannavida" placeholder="Anotá qué publicaron, formato, frecuencia..."></textarea>
+            <button class="radar-save" onclick="saveRadarNote('cannavida')">Guardar nota</button>
+          </div>
+
+          <!-- Farmacannabis -->
+          <div class="radar-card">
+            <div class="radar-card-header">
+              <div class="radar-avatar">🧪</div>
+              <div><div class="radar-name">Fc Farmacannabis</div><div class="radar-handle">@farmacannabis.cl</div></div>
+            </div>
+            <div class="radar-btns">
+              <a class="radar-btn ig" href="https://www.instagram.com/farmacannabis.cl/" target="_blank">📸 IG</a>
+              <a class="radar-btn" href="https://www.instagram.com/farmacannabis.cl/reels/" target="_blank">🎬 Reels</a>
+            </div>
+            <div class="radar-notes-label">OBSERVACIONES</div>
+            <textarea class="radar-notes" id="notes-farmacannabis" placeholder="Anotá qué publicaron, formato, frecuencia..."></textarea>
+            <button class="radar-save" onclick="saveRadarNote('farmacannabis')">Guardar nota</button>
+          </div>
+
+          <!-- Sanasativa Dharma -->
+          <div class="radar-card">
+            <div class="radar-card-header">
+              <div class="radar-avatar">☮️</div>
+              <div><div class="radar-name">Sanasativa Dharma</div><div class="radar-handle">@sanasativadharma</div></div>
+            </div>
+            <div class="radar-btns">
+              <a class="radar-btn ig" href="https://www.instagram.com/sanasativadharma/" target="_blank">📸 IG</a>
+              <a class="radar-btn" href="https://www.instagram.com/sanasativadharma/reels/" target="_blank">🎬 Reels</a>
+            </div>
+            <div class="radar-notes-label">OBSERVACIONES</div>
+            <textarea class="radar-notes" id="notes-sanasativa" placeholder="Anotá qué publicaron, formato, frecuencia..."></textarea>
+            <button class="radar-save" onclick="saveRadarNote('sanasativa')">Guardar nota</button>
+          </div>
+
+          <!-- Mariamed -->
+          <div class="radar-card">
+            <div class="radar-card-header">
+              <div class="radar-avatar">🌸</div>
+              <div><div class="radar-name">Mariamed</div><div class="radar-handle">@mariamed.cl</div></div>
+            </div>
+            <div class="radar-btns">
+              <a class="radar-btn ig" href="https://www.instagram.com/mariamed.cl/" target="_blank">📸 IG</a>
+              <a class="radar-btn" href="https://www.instagram.com/mariamed.cl/reels/" target="_blank">🎬 Reels</a>
+            </div>
+            <div class="radar-notes-label">OBSERVACIONES</div>
+            <textarea class="radar-notes" id="notes-mariamed" placeholder="Anotá qué publicaron, formato, frecuencia..."></textarea>
+            <button class="radar-save" onclick="saveRadarNote('mariamed')">Guardar nota</button>
+          </div>
+
+        </div>
       </div>
 
     </main>
@@ -1270,6 +1446,7 @@ function openView(view){
   if(view==='history')renderHistory();
   if(view==='projects')renderProjects();
   if(view==='agent-editor')renderAgentEditor();
+  if(view==='radar')loadRadarNotes();
 }
 
 // ============================================================
@@ -2061,6 +2238,22 @@ document.getElementById('chatInput').addEventListener('keydown',e=>{if(e.key==='
   await updateBadges();
   checkOnboard();
   setTimeout(()=>toast('🌿 Mawida AI v4.0 activo'),800);
+
+function saveRadarNote(id){
+  const val=document.getElementById('notes-'+id)?.value||'';
+  const notes=JSON.parse(ls_get('mawida_radar_notes')||'{}');
+  notes[id]={text:val,date:new Date().toISOString()};
+  ls_set('mawida_radar_notes',JSON.stringify(notes));
+  toast('✓ Nota guardada');
+}
+
+function loadRadarNotes(){
+  const notes=JSON.parse(ls_get('mawida_radar_notes')||'{}');
+  for(const[id,data] of Object.entries(notes)){
+    const el=document.getElementById('notes-'+id);
+    if(el)el.value=data.text||'';
+  }
+}
 })();
 </script>
 </body>
